@@ -17,3 +17,4 @@ This directory contains all necessary documentation for Assignment 3.
 - **Architecture**: See section 1 in Architecture & Design
 - **Diagrams**: See section 3 in Architecture & Design
 - **Development Plan**: See Project Plan
+
