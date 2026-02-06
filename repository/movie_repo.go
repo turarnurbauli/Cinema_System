@@ -12,12 +12,43 @@ type MovieRepo struct {
 	nextID int
 }
 
-// NewMovieRepo creates a new in-memory movie repository.
+// NewMovieRepo creates a new in-memory movie repository and seeds a few demo movies.
 func NewMovieRepo() *MovieRepo {
-	return &MovieRepo{
+	r := &MovieRepo{
 		items:  make(map[int]*model.Movie),
 		nextID: 1,
 	}
+
+	// Seed with a few example movies so UI and API are not empty on first run.
+	seed := []*model.Movie{
+		{
+			Title:       "Inception",
+			Description: "A thief who steals corporate secrets through dream-sharing technology.",
+			Duration:    148,
+			Genre:       "Sci-Fi",
+			Rating:      8.8,
+		},
+		{
+			Title:       "The Dark Knight",
+			Description: "Batman faces the Joker in Gotham City.",
+			Duration:    152,
+			Genre:       "Action",
+			Rating:      9.0,
+		},
+		{
+			Title:       "Interstellar",
+			Description: "Explorers travel through a wormhole in space to ensure humanity's survival.",
+			Duration:    169,
+			Genre:       "Sci-Fi",
+			Rating:      8.6,
+		},
+	}
+
+	for _, m := range seed {
+		_, _ = r.Create(m)
+	}
+
+	return r
 }
 
 // Create saves a new movie and returns it with ID set.
