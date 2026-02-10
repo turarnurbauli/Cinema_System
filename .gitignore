@@ -6,7 +6,6 @@
 *.dylib
 
 # Go
-/go.sum
 /vendor/
 
 # IDE
