@@ -5,6 +5,12 @@
 **URL:** [https://github.com/turarnurbauli/ADP-3](https://github.com/turarnurbauli/ADP-3)  
 **Clone:** `git clone https://github.com/turarnurbauli/ADP-3.git`
 
+**Команда на GitHub:**  
+- Alkhan Almas — [@AlmasAlkhan](https://github.com/AlmasAlkhan)  
+- Tuar Nurbauli — [@turarnurbauli](https://github.com/turarnurbauli)  
+
+Чтобы Алмас мог пушить в репозиторий: в репозитории ADP-3 зайти в **Settings → Collaborators → Add people** и добавить **AlmasAlkhan**.
+
 Чтобы отправить локальный проект на GitHub (если репозиторий на GitHub ещё пустой):
 
 ```bash

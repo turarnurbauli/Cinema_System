@@ -19,11 +19,11 @@ Our project addresses these needs by providing a modern, scalable solution built
 
 ### Existing Solutions:
 
-1. **Kinopoisk / KinoPoisk**
+1. **CHAPLIN**
    - Strengths: Large movie database, integration with ticketing systems
    - Weaknesses: Focus on movie information, not cinema management
 
-2. **Ticketmaster / Ticketland**
+2. **KINO PARK**
    - Strengths: Established ticket sales platform
    - Weaknesses: Not specialized for cinemas, high commissions
 

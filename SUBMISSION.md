@@ -88,5 +88,5 @@ git log --format="%h - %an: %s"
 
 ## Team Contacts
 
-- **Alkhan Almas** (Se-2425)
-- **Nurbauli Turar** (Se-2425)
+- **Alkhan Almas** (Se-2425) — https://github.com/AlmasAlkhan
+- **Tuar Nurbauli** (Se-2425) — https://github.com/turarnurbauli
