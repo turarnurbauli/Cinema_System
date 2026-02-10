@@ -1,20 +1,52 @@
 package main
 
 import (
+	"context"
 	"cinema-system/handler"
 	"cinema-system/repository"
 	"cinema-system/service"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
+
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const port = ":8080"
 
 func main() {
+	// Подключение к MongoDB Atlas (или локальной MongoDB) через переменную окружения MONGODB_URI.
+	mongoURI := os.Getenv("MONGODB_URI")
+	if mongoURI == "" {
+		log.Fatal("MONGODB_URI is not set; please configure a MongoDB Atlas connection string")
+	}
+
+	ctx := context.Background()
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongoURI))
+	if err != nil {
+		log.Fatalf("failed to connect to MongoDB: %v", err)
+	}
+	defer func() {
+		if err := client.Disconnect(context.Background()); err != nil {
+			log.Printf("error disconnecting MongoDB client: %v", err)
+		}
+	}()
+
+	// Имя базы можно переопределить через переменную окружения MONGODB_DB, по умолчанию "cinema".
+	dbName := os.Getenv("MONGODB_DB")
+	if dbName == "" {
+		dbName = "cinema"
+	}
+
+	repo, err := repository.NewMovieRepo(ctx, client, dbName)
+	if err != nil {
+		log.Fatalf("failed to initialise movie repository: %v", err)
+	}
+
 	// Repository → Service → Handler (Assignment 3 architecture)
-	repo := repository.NewMovieRepo()
 	svc := service.NewMovieService(repo)
 	movieHandler := handler.NewMovieHandler(svc)
 
@@ -47,7 +79,7 @@ func main() {
 </head>
 <body>
   <h1>Cinema System – Assignment 4</h1>
-  <p class="muted">Simple UI on top of JSON API. Data is in-memory and will reset after restart.</p>
+  <p class="muted">Simple UI on top of JSON API. Data is stored in MongoDB (Atlas/local).</p>
 
   <div class="layout">
     <section>

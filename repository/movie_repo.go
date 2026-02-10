@@ -1,26 +1,43 @@
 package repository
 
 import (
+	"context"
 	"cinema-system/model"
-	"sync"
+
+	"errors"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// MovieRepo is an in-memory store with mutex for safe concurrent access.
+// MovieRepo — репозиторий фильмов на MongoDB.
 type MovieRepo struct {
-	mu     sync.RWMutex
-	items  map[int]*model.Movie
-	nextID int
+	coll *mongo.Collection
 }
 
-// NewMovieRepo creates a new in-memory movie repository and seeds a few demo movies.
-func NewMovieRepo() *MovieRepo {
-	r := &MovieRepo{
-		items:  make(map[int]*model.Movie),
-		nextID: 1,
+// NewMovieRepo принимает MongoDB‑клиент и имя базы, инициализирует коллекцию и
+// при необходимости выполняет начальное заполнение.
+func NewMovieRepo(ctx context.Context, client *mongo.Client, dbName string) (*MovieRepo, error) {
+	coll := client.Database(dbName).Collection("movies")
+	r := &MovieRepo{coll: coll}
+	if err := r.seedIfEmpty(ctx); err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+func (r *MovieRepo) seedIfEmpty(ctx context.Context) error {
+	count, err := r.coll.CountDocuments(ctx, bson.D{})
+	if err != nil {
+		return err
+	}
+	if count > 0 {
+		return nil
 	}
 
 	// Seed with a few example movies so UI and API are not empty on first run.
-	seed := []*model.Movie{
+	seed := []model.Movie{
 		{
 			Title:       "Inception",
 			Description: "A thief who steals corporate secrets through dream-sharing technology.",
@@ -45,59 +62,99 @@ func NewMovieRepo() *MovieRepo {
 	}
 
 	for _, m := range seed {
-		_, _ = r.Create(m)
+		if _, err := r.Create(&m); err != nil {
+			return err
+		}
 	}
 
-	return r
+	return nil
+}
+
+// nextID ищет максимальный id и возвращает следующий.
+func (r *MovieRepo) nextID(ctx context.Context) (int, error) {
+	opts := options.FindOne().SetSort(bson.D{{Key: "id", Value: -1}})
+	var last model.Movie
+	err := r.coll.FindOne(ctx, bson.D{}, opts).Decode(&last)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return 1, nil
+	}
+	if err != nil {
+		return 0, err
+	}
+	return last.ID + 1, nil
 }
 
 // Create saves a new movie and returns it with ID set.
 func (r *MovieRepo) Create(m *model.Movie) (*model.Movie, error) {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-	m.ID = r.nextID
-	r.nextID++
-	r.items[m.ID] = m
+	ctx := context.Background()
+	id, err := r.nextID(ctx)
+	if err != nil {
+		return nil, err
+	}
+	m.ID = id
+	if _, err := r.coll.InsertOne(ctx, m); err != nil {
+		return nil, err
+	}
 	return m, nil
 }
 
 // GetByID returns a movie by ID or nil if not found.
 func (r *MovieRepo) GetByID(id int) (*model.Movie, error) {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
-	m, ok := r.items[id]
-	if !ok {
+	ctx := context.Background()
+	var m model.Movie
+	err := r.coll.FindOne(ctx, bson.D{{Key: "id", Value: id}}).Decode(&m)
+	if errors.Is(err, mongo.ErrNoDocuments) {
 		return nil, nil
 	}
-	return m, nil
+	if err != nil {
+		return nil, err
+	}
+	return &m, nil
 }
 
 // GetAll returns all movies.
 func (r *MovieRepo) GetAll() ([]*model.Movie, error) {
-	r.mu.RLock()
-	defer r.mu.RUnlock()
-	out := make([]*model.Movie, 0, len(r.items))
-	for _, m := range r.items {
-		out = append(out, m)
+	ctx := context.Background()
+	cur, err := r.coll.Find(ctx, bson.D{}, options.Find().SetSort(bson.D{{Key: "id", Value: 1}}))
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+
+	var out []*model.Movie
+	for cur.Next(ctx) {
+		var m model.Movie
+		if err := cur.Decode(&m); err != nil {
+			return nil, err
+		}
+		out = append(out, &m)
+	}
+	if err := cur.Err(); err != nil {
+		return nil, err
 	}
 	return out, nil
 }
 
 // Update updates an existing movie by ID.
 func (r *MovieRepo) Update(m *model.Movie) error {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-	if _, ok := r.items[m.ID]; !ok {
-		return nil // not found, no error for simplicity
-	}
-	r.items[m.ID] = m
-	return nil
+	ctx := context.Background()
+	update := bson.D{{
+		Key: "$set",
+		Value: bson.D{
+			{Key: "title", Value: m.Title},
+			{Key: "description", Value: m.Description},
+			{Key: "duration", Value: m.Duration},
+			{Key: "genre", Value: m.Genre},
+			{Key: "rating", Value: m.Rating},
+		},
+	}}
+	_, err := r.coll.UpdateOne(ctx, bson.D{{Key: "id", Value: m.ID}}, update)
+	return err
 }
 
 // Delete removes a movie by ID.
 func (r *MovieRepo) Delete(id int) error {
-	r.mu.Lock()
-	defer r.mu.Unlock()
-	delete(r.items, id)
-	return nil
+	ctx := context.Background()
+	_, err := r.coll.DeleteOne(ctx, bson.D{{Key: "id", Value: id}})
+	return err
 }
