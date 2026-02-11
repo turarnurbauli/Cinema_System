@@ -9,4 +9,5 @@ type Movie struct {
 	Duration    int     `json:"duration" bson:"duration"` // minutes
 	Genre       string  `json:"genre" bson:"genre"`
 	Rating      float64 `json:"rating" bson:"rating"`
+	PosterURL   string  `json:"posterUrl,omitempty" bson:"poster_url,omitempty"`
 }

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title>Cinema System – Онлайн кинотеатр</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand">
+        <div class="brand-logo"><span>CS</span></div>
+        <div class="brand-text">
+          <h1>Cinema System</h1>
+          <p>Выбор фильмов, залов и мест — учебный клон реального кинотеатра.</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="pill"><strong>Assignment 4</strong> · ADP‑2</div>
+        <div class="pill">Backend: Go · DB: MongoDB Atlas</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Афиша фильмов</h2>
+            <p>Загружается из <code>/api/movies</code>. Нажмите на фильм, чтобы выбрать сеанс.</p>
+          </div>
+        </div>
+        <div id="movies" class="movies-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="booking-layout">
+          <div class="booking-header">
+            <div class="booking-header-main">
+              <h2 id="booking-title">Выберите фильм</h2>
+              <p id="booking-subtitle">После выбора фильма появятся доступные залы и время сеанса.</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="hall-row">
+              <div class="hall-name">
+                Зал: <strong id="hall-label">–</strong>
+                <small id="time-label" class="time-label">Время не выбрано</small>
+              </div>
+              <div class="schedule-row" id="schedule-row"></div>
+            </div>
+          </div>
+
+          <div class="seat-map-wrapper">
+            <div>
+              <div class="screen-label">Экран</div>
+              <div class="screen-bar"></div>
+            </div>
+            <div id="seat-grid" class="seat-grid"></div>
+            <div class="seat-legend">
+              <div class="legend-item">
+                <div class="legend-swatch free"></div><span>Свободное место</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-swatch selected"></div><span>Выбрано</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-swatch unavailable"></div><span>Занято (для демо не используется)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary">
+            <div class="summary-row">
+              <div>
+                <strong>Ваши билеты</strong>
+                <div id="summary-caption" class="summary-caption">
+                  Выберите места в зале: щёлкните по креслам на схеме.
+                </div>
+              </div>
+              <div>
+                <div class="ticket-price" id="total-price">0 ₸</div>
+              </div>
+            </div>
+            <div id="tickets-list" class="summary-list"></div>
+            <div class="summary-row">
+              <button id="btn-book" disabled>Забронировать (демо)</button>
+              <button id="btn-clear" class="btn-outline" type="button">Сбросить выбор</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <span>Demo UI · Нет реальной оплаты, только учебный выбор билетов.</span>
+    <span>Team: Alkhan Almas &amp; Nurbauli Turar</span>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
+
