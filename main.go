@@ -116,6 +116,7 @@ func main() {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>NotFlix – Cinema &amp; Tickets</title>
   <style>
     :root {
@@ -812,6 +813,54 @@ func main() {
       display: flex;
       justify-content: space-between;
       gap: 8px;
+    }
+
+    /* Mobile-friendly */
+    @media (max-width: 768px) {
+      .shell { padding: 12px 12px 24px; gap: 16px; }
+      header { flex-wrap: wrap; gap: 10px; }
+      .brand-text h1 { font-size: 18px; }
+      .brand-text p { font-size: 12px; }
+      .header-actions { flex-wrap: wrap; gap: 6px; }
+      .header-search { margin-right: 0; }
+      .header-search input { width: 120px; }
+      .pill { font-size: 10px; padding: 6px 8px; }
+      .movies-list {
+        grid-template-columns: 1fr;
+        max-height: none;
+        gap: 12px;
+      }
+      .movie-card {
+        grid-template-columns: auto minmax(0, 1fr);
+        padding: 12px;
+        gap: 12px;
+      }
+      .movie-poster { width: 72px; height: 104px; font-size: 26px; }
+      .movie-info h3 { font-size: 15px; }
+      .panel-header { flex-wrap: wrap; gap: 8px; }
+      .panel { padding: 12px 14px; }
+      .booking-layout { padding: 12px; }
+      .chip { min-height: 44px; padding: 10px 14px; font-size: 14px; }
+      button:not(.btn-sm):not(.avatar-button), .btn-outline:not(.btn-sm) { min-height: 44px; padding: 10px 16px; }
+      #right-panel.open { width: 100%; min-width: 100%; max-width: 100%; }
+      .app-layout.right-panel-open .main-content { max-width: 0; overflow: hidden; }
+      .app-layout.right-panel-booking #right-panel.open { width: 100%; min-width: 100%; }
+      .app-layout.right-panel-booking .right-panel-inner { width: 100%; }
+      .right-panel-inner { padding: 14px; min-height: 320px; }
+      .seat-grid { gap: 6px; }
+      .seat { min-width: 32px; min-height: 32px; font-size: 11px; }
+      footer { flex-direction: column; text-align: center; padding: 12px 16px; }
+    }
+    @media (max-width: 480px) {
+      .shell { padding: 12px 10px 24px; padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); }
+      .brand-logo { width: 32px; height: 32px; }
+      .brand-logo span { font-size: 16px; }
+      .header-search input { width: 100px; }
+      .avatar-circle { width: 32px; height: 32px; font-size: 14px; }
+      .user-menu-dropdown { min-width: 160px; }
+      .movie-card { grid-template-columns: 1fr; }
+      .movie-poster { width: 100%; height: 160px; font-size: 48px; }
+      #auth-modal-box { max-width: 94vw; max-height: 90vh; overflow: auto; }
     }
   </style>
 </head>
@@ -1663,7 +1712,20 @@ func main() {
     const rightPanelTitle = document.getElementById("right-panel-title");
     const rightPanelContent = document.getElementById("right-panel-content");
     var rightPanelShowingBooking = false;
+    function ensureBookingSectionInMain() {
+      var bookingSection = document.getElementById("booking-section");
+      var anchor = document.getElementById("booking-section-anchor");
+      var main = document.querySelector("main");
+      if (bookingSection && anchor && main && bookingSection.parentNode === rightPanelContent) {
+        main.insertBefore(bookingSection, anchor);
+        rightPanelShowingBooking = false;
+        var role = localStorage.getItem("cinema_role");
+        if (role === "customer" || role === "cashier") bookingSection.style.display = "none";
+        else bookingSection.style.display = "block";
+      }
+    }
     function openRightPanel(title, html) {
+      ensureBookingSectionInMain();
       rightPanelShowingBooking = false;
       rightPanelTitle.textContent = title;
       rightPanelContent.innerHTML = html;
@@ -1695,6 +1757,7 @@ func main() {
         }
         rightPanelShowingBooking = false;
       } else {
+        ensureBookingSectionInMain();
         rightPanelContent.innerHTML = "";
       }
       rightPanel.classList.remove("open");
@@ -1704,6 +1767,7 @@ func main() {
     document.getElementById("right-panel-close").addEventListener("click", closeRightPanel);
 
     async function openMyPurchasesPanel() {
+      ensureBookingSectionInMain();
       rightPanelShowingBooking = false;
       rightPanelTitle.textContent = "My purchases";
       rightPanelContent.innerHTML = "<p style=\"color:var(--muted);font-size:13px;\">Loading...</p>";
@@ -1733,6 +1797,7 @@ func main() {
       }
     }
     async function openMyProfilePanel() {
+      ensureBookingSectionInMain();
       rightPanelShowingBooking = false;
       rightPanelTitle.textContent = "My profile";
       rightPanelContent.innerHTML = "<p style=\"color:var(--muted);font-size:13px;\">Loading profile...</p>";
