@@ -204,7 +204,10 @@ func main() {
     .header-actions {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 6px;
+      margin-left: auto;
+      flex-shrink: 0;
     }
     .avatar-button {
       border: none;
@@ -825,9 +828,10 @@ func main() {
     @media (max-width: 768px) {
       .shell { padding: 12px 12px 24px; gap: 16px; max-width: 100%; }
       header { flex-wrap: wrap; gap: 10px; }
+      .brand { flex-shrink: 0; }
       .brand-text h1 { font-size: 18px; }
       .brand-text p { font-size: 12px; }
-      .header-actions { flex-wrap: wrap; gap: 6px; }
+      .header-actions { flex-wrap: wrap; gap: 6px; justify-content: flex-end; margin-left: auto; }
       .header-search { margin-right: 0; }
       .header-search input { width: 120px; max-width: 100%; }
       .pill { font-size: 10px; padding: 6px 8px; }
