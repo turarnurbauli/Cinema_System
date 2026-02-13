@@ -152,28 +152,28 @@ func main() {
     .shell {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 24px 16px 32px;
+      padding: 20px 14px 28px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
 
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
     }
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .brand-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
       background: conic-gradient(from 200deg, #f97316, #facc15, #22c55e, #0ea5e9, #a855f7, #f97316);
       display: flex;
       align-items: center;
@@ -182,25 +182,25 @@ func main() {
     }
     .brand-logo span {
       font-weight: 800;
-      font-size: 20px;
+      font-size: 18px;
       color: #020617;
     }
     .brand-text h1 {
       margin: 0;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: 0.03em;
     }
     .brand-text p {
       margin: 2px 0 0;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .avatar-button {
       border: none;
@@ -209,8 +209,8 @@ func main() {
       cursor: pointer;
     }
     .avatar-circle {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 999px;
       background: linear-gradient(135deg, #f97316, #facc15);
       display: flex;
@@ -218,7 +218,7 @@ func main() {
       justify-content: center;
       color: #020617;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 15px;
       overflow: hidden;
     }
     .avatar-circle img {
@@ -231,16 +231,16 @@ func main() {
       top: 110%;
       right: 0;
       background: var(--bg-elevated);
-      border-radius: 12px;
+      border-radius: 10px;
       border: 1px solid var(--border-subtle);
-      min-width: 170px;
-      padding: 6px 0;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+      min-width: 160px;
+      padding: 4px 0;
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.9);
       z-index: 20;
     }
     .user-menu-item {
-      padding: 6px 12px;
-      font-size: 13px;
+      padding: 6px 10px;
+      font-size: 12px;
       cursor: pointer;
     }
     .user-menu-item:hover {
@@ -254,12 +254,12 @@ func main() {
     .header-search {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
+      gap: 5px;
+      padding: 3px 8px;
       border-radius: 999px;
       background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(148, 163, 184, 0.35);
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
     }
     .header-search input {
@@ -267,8 +267,8 @@ func main() {
       outline: none;
       background: transparent;
       color: var(--text);
-      font-size: 12px;
-      width: 160px;
+      font-size: 11px;
+      width: 140px;
     }
     .header-search input::placeholder {
       color: var(--muted);
@@ -301,14 +301,13 @@ func main() {
       color: var(--text);
       font-size: 11px;
     }
-    }
     .pill {
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.4);
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--muted);
       background: rgba(15, 23, 42, 0.9);
     }
@@ -319,33 +318,33 @@ func main() {
     main {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 20px;
       align-items: flex-start;
     }
 
     .panel {
-      border-radius: 20px;
+      border-radius: 16px;
       background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), #020617 60%);
       border: 1px solid rgba(15, 23, 42, 0.9);
       box-shadow:
-        0 24px 60px rgba(15, 23, 42, 0.95),
+        0 20px 48px rgba(15, 23, 42, 0.95),
         inset 0 0 0 1px rgba(15, 23, 42, 0.85);
-      padding: 16px 18px 18px;
+      padding: 14px 16px 16px;
     }
 
     .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .panel-header h2 {
       margin: 0;
-      font-size: 16px;
+      font-size: 15px;
     }
     .panel-header p {
       margin: 0;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
     }
 
@@ -368,17 +367,17 @@ func main() {
     .movies-list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      max-height: 640px;
+      gap: 14px;
+      max-height: 580px;
       overflow: auto;
-      padding-right: 6px;
+      padding-right: 4px;
     }
     .movie-card {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
-      gap: 16px;
-      padding: 16px 16px;
-      border-radius: 18px;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 16px;
       background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(31, 41, 55, 0.9);
       cursor: pointer;
@@ -396,15 +395,15 @@ func main() {
       background: radial-gradient(circle at top left, rgba(248, 171, 94, 0.25), rgba(15, 23, 42, 0.95));
     }
     .movie-poster {
-      width: 88px;
-      height: 128px;
-      border-radius: 14px;
+      width: 80px;
+      height: 116px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #1d4ed8, #a855f7);
       display: flex;
       align-items: flex-end;
       justify-content: center;
       overflow: hidden;
-      font-size: 34px;
+      font-size: 28px;
       font-weight: 700;
       color: rgba(15, 23, 42, 0.95);
       box-shadow:
@@ -414,7 +413,7 @@ func main() {
     .movie-poster span {
       width: 100%;
       text-align: center;
-      padding: 8px 10px;
+      padding: 6px 8px;
       background: linear-gradient(to top, rgba(248, 250, 252, 0.9), transparent);
     }
     .movie-poster img {
@@ -424,24 +423,24 @@ func main() {
       border-radius: 14px;
     }
     .movie-info h3 {
-      margin: 0 0 4px;
-      font-size: 17px;
+      margin: 0 0 2px;
+      font-size: 15px;
     }
     .movie-meta {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .movie-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 6px;
+      gap: 6px;
+      margin-top: 4px;
     }
     .tag {
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 999px;
-      font-size: 12px;
+      font-size: 11px;
       border: 1px solid rgba(55, 65, 81, 0.9);
       color: var(--muted);
       background: rgba(15, 23, 42, 0.9);
@@ -459,26 +458,26 @@ func main() {
       gap: 12px;
     }
     .booking-header-main h2 {
-      margin: 0 0 4px;
-      font-size: 17px;
+      margin: 0 0 2px;
+      font-size: 15px;
     }
     .booking-header-main p {
       margin: 0;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
     }
 
     .schedule-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 6px;
+      gap: 6px;
+      margin-top: 4px;
     }
     .chip {
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 999px;
       border: 1px solid rgba(55, 65, 81, 0.9);
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
       cursor: pointer;
       background: rgba(15, 23, 42, 0.9);
@@ -497,14 +496,14 @@ func main() {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 8px 10px;
-      border-radius: 12px;
+      gap: 10px;
+      padding: 6px 10px;
+      border-radius: 10px;
       background: rgba(15, 23, 42, 0.7);
       border: 1px solid rgba(30, 64, 175, 0.4);
     }
     .hall-name {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
     }
     .hall-name strong {
@@ -513,18 +512,18 @@ func main() {
 
     /* Seat map */
     .seat-map-wrapper {
-      border-radius: 16px;
+      border-radius: 14px;
       background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 1));
       border: 1px solid rgba(15, 23, 42, 0.9);
-      padding: 12px 14px 14px;
+      padding: 10px 12px 12px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      min-height: 220px;
+      gap: 6px;
+      min-height: 200px;
     }
     .screen-label {
       text-align: center;
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
@@ -591,20 +590,20 @@ func main() {
     .seat-legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      font-size: 11px;
+      gap: 8px;
+      font-size: 10px;
       color: var(--muted);
-      margin-top: 4px;
+      margin-top: 2px;
     }
     .legend-item {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
     .legend-swatch {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
       border: 1px solid rgba(55, 65, 81, 0.9);
     }
     .legend-swatch.free { background: var(--seat-free); }
@@ -621,39 +620,39 @@ func main() {
     #auth-modal-overlay.hidden { display: none; }
     #auth-modal-box {
       background: var(--bg-elevated); border: 1px solid var(--border-subtle);
-      border-radius: 20px; padding: 28px; max-width: 360px; width: 100%;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+      border-radius: 16px; padding: 22px; max-width: 340px; width: 100%;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.5);
     }
-    #auth-modal-box h2 { margin: 0 0 20px; font-size: 20px; text-align: center; }
-    #auth-modal-box .auth-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    #auth-modal-box h2 { margin: 0 0 16px; font-size: 18px; text-align: center; }
+    #auth-modal-box .auth-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
     #auth-modal-box .auth-tabs button {
-      flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--border-subtle);
-      background: var(--bg); color: var(--muted); font-size: 14px; cursor: pointer;
+      flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border-subtle);
+      background: var(--bg); color: var(--muted); font-size: 13px; cursor: pointer;
     }
     #auth-modal-box .auth-tabs button.active { background: var(--accent-soft); color: var(--accent-strong); border-color: var(--accent); }
     #auth-modal-box .auth-form { display: none; }
     #auth-modal-box .auth-form.active { display: block; }
     #auth-modal-box .auth-form input {
-      width: 100%; margin-bottom: 10px; padding: 10px 12px; border-radius: 8px;
-      border: 1px solid var(--border-subtle); background: var(--bg); color: var(--text); box-sizing: border-box;
+      width: 100%; margin-bottom: 8px; padding: 8px 10px; border-radius: 8px;
+      border: 1px solid var(--border-subtle); background: var(--bg); color: var(--text); box-sizing: border-box; font-size: 14px;
     }
-    #auth-modal-box .auth-form button[type="button"] { width: 100%; margin-top: 8px; padding: 10px; }
+    #auth-modal-box .auth-form button[type="button"] { width: 100%; margin-top: 6px; padding: 8px; font-size: 13px; }
     #app-content { min-height: 100vh; }
 
     /* Ticket summary */
     .summary {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      font-size: 13px;
+      gap: 4px;
+      font-size: 12px;
     }
     .summary-row {
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
     }
     .summary-row strong {
-      font-size: 14px;
+      font-size: 13px;
     }
     .summary-list {
       max-height: 120px;
@@ -663,10 +662,10 @@ func main() {
     .ticket-item {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
-      padding: 8px 10px;
-      border-radius: 10px;
+      padding: 6px 8px;
+      border-radius: 8px;
       background: rgba(15, 23, 42, 0.85);
       border: 1px solid rgba(31, 41, 55, 0.9);
       margin-bottom: 4px;
@@ -688,7 +687,7 @@ func main() {
       padding: 4px 8px;
     }
     .ticket-price {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--accent-strong);
       text-align: right;
     }
@@ -696,8 +695,8 @@ func main() {
     button {
       border-radius: 999px;
       border: none;
-      padding: 8px 14px;
-      font-size: 13px;
+      padding: 7px 12px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       background: var(--success);
@@ -731,7 +730,7 @@ func main() {
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
     #right-panel {
       width: 0;
@@ -742,59 +741,59 @@ func main() {
       background: var(--bg-soft);
     }
     #right-panel.open {
-      width: 380px;
-      min-width: 380px;
+      width: 360px;
+      min-width: 360px;
       border-left: 1px solid var(--border-subtle);
     }
     .app-layout.right-panel-open .main-content {
-      max-width: calc(100% - 380px);
+      max-width: calc(100% - 360px);
     }
     .app-layout.right-panel-open .movies-list {
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     }
     .app-layout.right-panel-booking.right-panel-open .main-content {
-      max-width: calc(100% - 520px);
+      max-width: calc(100% - 480px);
     }
     .app-layout.right-panel-booking.right-panel-open .movies-list {
       grid-template-columns: 1fr;
     }
     .app-layout.right-panel-booking #right-panel.open {
-      width: 520px;
-      min-width: 520px;
+      width: 480px;
+      min-width: 480px;
     }
     .app-layout.right-panel-booking .right-panel-inner {
-      width: 520px;
+      width: 480px;
     }
     .right-panel-inner {
-      width: 380px;
+      width: 360px;
       height: 100%;
-      min-height: 400px;
-      padding: 20px;
+      min-height: 360px;
+      padding: 16px;
       overflow: auto;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
     .right-panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-    .right-panel-header h3 { margin: 0; font-size: 16px; }
+    .right-panel-header h3 { margin: 0; font-size: 15px; }
     .right-panel-content input, .right-panel-content select, .right-panel-content textarea {
       width: 100%;
-      margin-bottom: 8px;
-      padding: 8px 10px;
+      margin-bottom: 6px;
+      padding: 7px 9px;
       border-radius: 8px;
       border: 1px solid var(--border-subtle);
       background: var(--bg);
       color: var(--text);
       box-sizing: border-box;
     }
-    .right-panel-content textarea { resize: vertical; min-height: 60px; }
-    .right-panel-content .row { margin-bottom: 10px; }
-    .right-panel-content button { margin-right: 8px; margin-top: 4px; }
+    .right-panel-content textarea { resize: vertical; min-height: 52px; }
+    .right-panel-content .row { margin-bottom: 8px; }
+    .right-panel-content button { margin-right: 6px; margin-top: 2px; }
     .film-list-admin { list-style: none; padding: 0; margin: 0 0 12px; }
     .film-list-admin li {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
@@ -807,12 +806,12 @@ func main() {
     footer {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 16px 20px;
-      font-size: 11px;
+      padding: 0 14px 18px;
+      font-size: 10px;
       color: var(--muted);
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
     }
 
     /* Mobile-friendly */
