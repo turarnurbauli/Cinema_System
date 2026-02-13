@@ -139,9 +139,11 @@ func main() {
     }
 
     * { box-sizing: border-box; }
+    html { overflow-x: hidden; }
     body {
       margin: 0;
       min-height: 100vh;
+      overflow-x: hidden;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
       background: radial-gradient(circle at top, #111827 0, #020617 45%, #020617 100%);
       color: var(--text);
@@ -151,12 +153,14 @@ func main() {
 
     .shell {
       max-width: 1280px;
+      width: 100%;
       margin: 0 auto;
       padding: 20px 14px 28px;
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 20px;
+      min-width: 0;
     }
 
     header {
@@ -320,6 +324,7 @@ func main() {
       grid-template-columns: 1fr;
       gap: 20px;
       align-items: flex-start;
+      min-width: 0;
     }
 
     .panel {
@@ -637,7 +642,7 @@ func main() {
       border: 1px solid var(--border-subtle); background: var(--bg); color: var(--text); box-sizing: border-box; font-size: 14px;
     }
     #auth-modal-box .auth-form button[type="button"] { width: 100%; margin-top: 6px; padding: 8px; font-size: 13px; }
-    #app-content { min-height: 100vh; }
+    #app-content { min-height: 100vh; overflow-x: hidden; max-width: 100%; }
 
     /* Ticket summary */
     .summary {
@@ -728,9 +733,11 @@ func main() {
     .main-content {
       flex: 1;
       min-width: 0;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       gap: 20px;
+      overflow-x: hidden;
     }
     #right-panel {
       width: 0;
@@ -780,7 +787,7 @@ func main() {
       align-items: center;
       margin-bottom: 6px;
     }
-    .right-panel-header h3 { margin: 0; font-size: 15px; }
+    .right-panel-header h3 { margin: 0; font-size: 15px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .right-panel-content input, .right-panel-content select, .right-panel-content textarea {
       width: 100%;
       margin-bottom: 6px;
@@ -800,7 +807,7 @@ func main() {
       padding: 8px 10px; border-radius: 10px; background: rgba(15,23,42,0.8);
       margin-bottom: 6px; border: 1px solid var(--border-subtle);
     }
-    .film-list-admin li span { flex: 1; font-size: 13px; }
+    .film-list-admin li span { flex: 1; font-size: 13px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
     .film-list-admin .btn-sm { padding: 4px 10px; font-size: 12px; }
 
     footer {
@@ -816,13 +823,13 @@ func main() {
 
     /* Mobile-friendly */
     @media (max-width: 768px) {
-      .shell { padding: 12px 12px 24px; gap: 16px; }
+      .shell { padding: 12px 12px 24px; gap: 16px; max-width: 100%; }
       header { flex-wrap: wrap; gap: 10px; }
       .brand-text h1 { font-size: 18px; }
       .brand-text p { font-size: 12px; }
       .header-actions { flex-wrap: wrap; gap: 6px; }
       .header-search { margin-right: 0; }
-      .header-search input { width: 120px; }
+      .header-search input { width: 120px; max-width: 100%; }
       .pill { font-size: 10px; padding: 6px 8px; }
       .movies-list {
         grid-template-columns: 1fr;
@@ -833,33 +840,60 @@ func main() {
         grid-template-columns: auto minmax(0, 1fr);
         padding: 12px;
         gap: 12px;
+        min-width: 0;
       }
       .movie-poster { width: 72px; height: 104px; font-size: 26px; }
+      .movie-info { min-width: 0; }
       .movie-info h3 { font-size: 15px; }
       .panel-header { flex-wrap: wrap; gap: 8px; }
-      .panel { padding: 12px 14px; }
-      .booking-layout { padding: 12px; }
+      .panel { padding: 12px 14px; min-width: 0; }
+      .booking-layout { padding: 12px; min-width: 0; }
+      .hall-row { flex-wrap: wrap; }
+      .schedule-row { flex: 1; min-width: 0; }
+      .summary-row { flex-wrap: wrap; gap: 8px; }
+      .summary-row button { flex: 1; min-width: 120px; }
+      .summary-list { max-height: 100px; -webkit-overflow-scrolling: touch; }
       .chip { min-height: 44px; padding: 10px 14px; font-size: 14px; }
       button:not(.btn-sm):not(.avatar-button), .btn-outline:not(.btn-sm) { min-height: 44px; padding: 10px 16px; }
-      #right-panel.open { width: 100%; min-width: 100%; max-width: 100%; }
-      .app-layout.right-panel-open .main-content { max-width: 0; overflow: hidden; }
+      #right-panel.open { width: 100%; min-width: 100%; max-width: 100%; min-height: 0; overflow: hidden; display: flex; flex-direction: column; flex: 1; }
+      .app-layout.right-panel-open .main-content { max-width: 0; overflow: hidden; min-width: 0; }
       .app-layout.right-panel-booking #right-panel.open { width: 100%; min-width: 100%; }
       .app-layout.right-panel-booking .right-panel-inner { width: 100%; }
-      .right-panel-inner { padding: 14px; min-height: 320px; }
-      .seat-grid { gap: 6px; }
+      .right-panel-inner { padding: 14px; min-height: 0; flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; }
+      .right-panel-content:has(.seat-grid) { max-height: 60vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .seat-map-wrapper {
+        max-height: 52vh;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 10px 10px;
+      }
+      .seat-grid { gap: 6px; justify-content: flex-start; }
       .seat { min-width: 32px; min-height: 32px; font-size: 11px; }
+      #all-bookings-list, #cashier-bookings-list { max-height: 180px; -webkit-overflow-scrolling: touch; }
+      .panel input[type="number"] { max-width: 100%; box-sizing: border-box; }
       footer { flex-direction: column; text-align: center; padding: 12px 16px; }
     }
     @media (max-width: 480px) {
       .shell { padding: 12px 10px 24px; padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); }
+      .brand-text h1 { font-size: 16px; }
       .brand-logo { width: 32px; height: 32px; }
       .brand-logo span { font-size: 16px; }
-      .header-search input { width: 100px; }
+      .header-search input { width: 100px; min-width: 0; }
       .avatar-circle { width: 32px; height: 32px; font-size: 14px; }
-      .user-menu-dropdown { min-width: 160px; }
+      .user-menu-dropdown { min-width: 140px; max-width: calc(100vw - 24px); }
       .movie-card { grid-template-columns: 1fr; }
       .movie-poster { width: 100%; height: 160px; font-size: 48px; }
-      #auth-modal-box { max-width: 94vw; max-height: 90vh; overflow: auto; }
+      #auth-modal-overlay { padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
+      #auth-modal-box { max-width: 94vw; max-height: 85vh; overflow: auto; -webkit-overflow-scrolling: touch; }
+      .seat-map-wrapper { max-height: 46vh; }
+      .seat { min-width: 28px; min-height: 28px; font-size: 10px; }
+      .seat-row-label { width: 14px; font-size: 9px; }
+      .summary-row button { min-width: 100px; }
+      .ticket-item { grid-template-columns: 1fr auto; grid-template-rows: auto auto; }
+      .ticket-item > div:first-child { grid-column: 1; grid-row: 1; }
+      .ticket-item .ticket-price { grid-column: 2; grid-row: 1; }
+      .ticket-item .ticket-type-wrap { grid-column: 1 / -1; grid-row: 2; }
+      #all-bookings-list, #cashier-bookings-list { max-height: 140px; }
     }
   </style>
 </head>
