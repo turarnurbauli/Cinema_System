@@ -964,7 +964,6 @@ func main() {
             <button type="button" id="btn-do-login">Log in</button>
           </div>
         </div>
-        <div class="pill">Go · MongoDB</div>
       </div>
     </header>
 
