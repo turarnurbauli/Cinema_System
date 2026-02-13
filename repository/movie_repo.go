@@ -188,6 +188,7 @@ func (r *MovieRepo) Update(m *model.Movie) error {
 			{Key: "duration", Value: m.Duration},
 			{Key: "genre", Value: m.Genre},
 			{Key: "rating", Value: m.Rating},
+			{Key: "poster_url", Value: m.PosterURL},
 		},
 	}}
 	_, err := r.coll.UpdateOne(ctx, bson.D{{Key: "id", Value: m.ID}}, update)

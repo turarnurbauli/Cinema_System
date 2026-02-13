@@ -17,3 +17,6 @@
 # OS
 .DS_Store
 Thumbs.db
+
+# Local run script (may contain credentials)
+run.ps1

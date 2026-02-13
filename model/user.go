@@ -8,5 +8,6 @@ type User struct {
 	PasswordHash string `json:"-" bson:"password_hash"`
 	Name         string `json:"name" bson:"name"`
 	Role         string `json:"role" bson:"role"`
+	AvatarURL    string `json:"avatarUrl,omitempty" bson:"avatar_url,omitempty"`
 }
 

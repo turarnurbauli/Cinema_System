@@ -48,6 +48,19 @@ func (r *UserRepo) Create(ctx context.Context, u *model.User) (*model.User, erro
 	return u, nil
 }
 
+// GetByID возвращает пользователя по ID или nil, если не найден.
+func (r *UserRepo) GetByID(ctx context.Context, id int) (*model.User, error) {
+	var u model.User
+	err := r.coll.FindOne(ctx, bson.D{{Key: "id", Value: id}}).Decode(&u)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	return &u, nil
+}
+
 // GetByEmail возвращает пользователя по email или nil, если не найден.
 func (r *UserRepo) GetByEmail(ctx context.Context, email string) (*model.User, error) {
 	var u model.User
@@ -64,5 +77,17 @@ func (r *UserRepo) GetByEmail(ctx context.Context, email string) (*model.User, e
 // CountByRole считает пользователей с указанной ролью.
 func (r *UserRepo) CountByRole(ctx context.Context, role string) (int64, error) {
 	return r.coll.CountDocuments(ctx, bson.D{{Key: "role", Value: role}})
+}
+
+// UpdateFields обновляет указанные поля пользователя и возвращает обновлённую запись.
+func (r *UserRepo) UpdateFields(ctx context.Context, id int, fields bson.D) (*model.User, error) {
+	if len(fields) == 0 {
+		return r.GetByID(ctx, id)
+	}
+	_, err := r.coll.UpdateOne(ctx, bson.D{{Key: "id", Value: id}}, bson.D{{Key: "$set", Value: fields}})
+	if err != nil {
+		return nil, err
+	}
+	return r.GetByID(ctx, id)
 }
 

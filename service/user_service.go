@@ -7,6 +7,7 @@ import (
 
 	"errors"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -95,5 +96,78 @@ func (s *UserService) Authenticate(ctx context.Context, email, password string) 
 		return nil, errors.New("invalid credentials")
 	}
 	return u, nil
+}
+
+// GetByID возвращает пользователя по ID.
+func (s *UserService) GetByID(ctx context.Context, id int) (*model.User, error) {
+	return s.repo.GetByID(ctx, id)
+}
+
+// ProfileUpdate описывает изменения профиля.
+type ProfileUpdate struct {
+	Name            string
+	Email           string
+	AvatarURL       string
+	CurrentPassword string
+	NewPassword     string
+}
+
+// UpdateProfile обновляет профиль текущего пользователя.
+func (s *UserService) UpdateProfile(ctx context.Context, id int, p ProfileUpdate) (*model.User, error) {
+	u, err := s.repo.GetByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	if u == nil {
+		return nil, errors.New("user not found")
+	}
+
+	// Имя
+	name := u.Name
+	if p.Name != "" {
+		name = p.Name
+	}
+
+	// Email с проверкой уникальности
+	email := u.Email
+	if p.Email != "" && p.Email != u.Email {
+		existing, err := s.repo.GetByEmail(ctx, p.Email)
+		if err != nil {
+			return nil, err
+		}
+		if existing != nil && existing.ID != u.ID {
+			return nil, errors.New("email already in use")
+		}
+		email = p.Email
+	}
+
+	// Аватар
+	avatar := u.AvatarURL
+	if p.AvatarURL != "" {
+		avatar = p.AvatarURL
+	}
+
+	fields := bson.D{
+		{Key: "name", Value: name},
+		{Key: "email", Value: email},
+		{Key: "avatar_url", Value: avatar},
+	}
+
+	// Смена пароля
+	if p.NewPassword != "" {
+		if p.CurrentPassword == "" {
+			return nil, errors.New("current password is required to set a new password")
+		}
+		if err := bcrypt.CompareHashAndPassword([]byte(u.PasswordHash), []byte(p.CurrentPassword)); err != nil {
+			return nil, errors.New("current password is incorrect")
+		}
+		hash, err := bcrypt.GenerateFromPassword([]byte(p.NewPassword), bcrypt.DefaultCost)
+		if err != nil {
+			return nil, err
+		}
+		fields = append(fields, bson.E{Key: "password_hash", Value: string(hash)})
+	}
+
+	return s.repo.UpdateFields(ctx, id, fields)
 }
 

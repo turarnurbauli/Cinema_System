@@ -10,11 +10,31 @@ Project for Advanced Programming 1 (Assignment 3: Design; Assignment 4: Core Imp
 
 ## Running the Project
 
-```bash
+**Windows (PowerShell)** — из папки проекта:
+
+```powershell
+.\run.ps1
+```
+
+Скрипт `run.ps1` задаёт переменные окружения и запускает сервер. Если файла нет, задай переменные вручную и выполни `go run .`:
+
+```powershell
+$env:MONGODB_URI = "mongodb+srv://USER:PASSWORD@cluster0.xxxxx.mongodb.net/cinema?retryWrites=true&w=majority&appName=Cluster0"
+$env:MONGODB_DB = "cinema"
+$env:JWT_SECRET = "super_secret_key_123"
 go run .
 ```
 
-Server starts at **http://localhost:8080**.
+**Mac / Linux (bash):**
+
+```bash
+export MONGODB_URI="mongodb+srv://USER:PASSWORD@cluster0.xxxxx.mongodb.net/cinema?retryWrites=true&w=majority&appName=Cluster0"
+export MONGODB_DB="cinema"
+export JWT_SECRET="super_secret_key_123"
+go run .
+```
+
+Сервер будет доступен по адресу **http://localhost:8080**.
 
 ### Assignment 4 – API (Postman / curl)
 
